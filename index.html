@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Owl's Enchanted Chronicle</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin:0;
+    font-family:'Cinzel', serif;
+    background: radial-gradient(circle at top, #0b0f1a, #000);
+    color:#f5f5f5;
+    overflow-x:hidden;
+}
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:20px;
+    text-align:center;
+}
+h1{font-size:2.2rem;}
+.card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    border-radius:16px;
+    padding:20px;
+    margin:15px 0;
+    box-shadow:0 0 20px rgba(123,92,255,0.4);
+    animation: fadeIn 1s ease;
+}
+@keyframes fadeIn {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+}
+.locked{opacity:0.25;}
+.glow{
+    color:#ffd700;
+    font-size:1.8rem;
+    animation: glowPulse 2s infinite;
+}
+@keyframes glowPulse {
+    0%{text-shadow:0 0 5px #ffd700;}
+    50%{text-shadow:0 0 20px #ffd700;}
+    100%{text-shadow:0 0 5px #ffd700;}
+}
+.hint{
+    font-size:0.8rem;
+    opacity:0.7;
+    margin-top:8px;
+}
+button{
+    padding:10px 20px;
+    border:none;
+    background:#7b5cff;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    margin-bottom:15px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>🦉 The Owl's Enchanted Chronicle</h1>
+<p>Tap below to awaken the magic...</p>
+<button onclick="startMagic()">Start Magic</button>
+
+<div id="quests"></div>
+</div>
+
+<audio id="bgm" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4b0cb3e9d3.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function startMagic(){
+    document.getElementById("bgm").play();
+}
+
+const letters = ["H","A","P","P","Y","B","I","R","T","H","D","A","Y"];
+
+const stories = [
+"A faint glow appears beneath the owl's wing...",
+"The wind carries a whisper of ancient magic...",
+"A hidden rune flickers in the dark...",
+"The castle walls hum with energy...",
+"A secret begins to unfold...",
+"The air feels heavier with mystery...",
+"A spark reveals something unseen...",
+"The night sky shifts strangely...",
+"A silent echo reveals a truth...",
+"The magic strengthens...",
+"The final pieces begin aligning...",
+"The rune pulses brighter than ever...",
+"The message is nearly complete..."
+];
+
+const hints = [
+"Look for the first sound of joy",
+"A beginning letter often used in greetings",
+"A soft repeating letter appears again",
+"Same as before—patterns repeat",
+"A vowel that sounds like 'ee'",
+"First letter of 'brave'",
+"A small straight line letter",
+"A rolling sound like a growl",
+"A strong ending consonant",
+"Same as the first letter",
+"A firm letter like a knock",
+"Again a vowel",
+"The final reveal completes everything"
+];
+
+const startDate = new Date("2026-03-28");
+const today = new Date();
+const questsDiv = document.getElementById("quests");
+
+letters.forEach((letter, index) => {
+    const unlockDate = new Date(startDate);
+    unlockDate.setDate(startDate.getDate() + index);
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    if(today >= unlockDate){
+        card.innerHTML = `
+        <h3>Day ${index+1}</h3>
+        <p>${stories[index]}</p>
+        <div class="glow">${letter}</div>
+        <div class="hint">Hint: ${hints[index]}</div>
+        `;
+    } else {
+        card.classList.add("locked");
+        card.innerHTML = `
+        <h3>Day ${index+1}</h3>
+        <p>🔒 Awaiting the next owl...</p>
+        <div class="hint">Hint will reveal with time</div>
+        `;
+    }
+
+    questsDiv.appendChild(card);
+});
+</script>
+
+</body>
+</html>
